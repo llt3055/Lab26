@@ -87,6 +87,14 @@ int main() {
 
     cout << "\nMilestone 2 complete: 3D array populated and adapted to 15-run loop." << endl;
 
+    for (int op = 0; op < 4; ++op) {
+            for (int cont = 0; cont < 3; cont) {
+                if (stats[0][op][cont] = -1) {
+                    stats[1][op][cont] = -1; 
+                }
+                } else {
+                   
+                }
     return 0;
 }
 
