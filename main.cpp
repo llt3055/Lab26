@@ -52,12 +52,12 @@ int main() {
 
     // List Sort
     start = high_resolution_clock::now();
-    v.insert(v.begin() + v.size(), "TESTCODE");
+    v.insert(v.begin() + v.size()/2, "TESTCODE");
     stats[0][2][0] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
 
     start = high_resolution_clock::now();
     auto itL = l.begin();
-    advance(itL, l.size());
+    advance(itL, l.size()/2);
     l.insert(itL, "TESTCODE");
     stats[0][2][1] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
 
