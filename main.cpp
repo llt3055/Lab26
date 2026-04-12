@@ -24,7 +24,7 @@ int main() {
     list<string> l;
     set<string> s;
 
-    // read codes.txt into vector
+    // Operation: Read (Row 0)
     auto start = high_resolution_clock::now();
     ifstream fin1("codes.txt");
     while (getline(fin1, nm)) v.push_back(nm);
@@ -46,11 +46,15 @@ int main() {
     stats[0][0][2] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
     
     start = high_resolution_clock::now();
+    sort(v.begin(), v.end());
+    stats[0][1][0] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
+
+    start = high_resolution_clock::now();
     l.sort();
     stats[0][1][1] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
-    stats[0][1][2] = -1; // Set is inherently sorted
+    stats[0][1][2] = 0; // Set is inherently sorted
 
-    // List Sort
+    // Operation: Insert (Row 2)
     start = high_resolution_clock::now();
     v.insert(v.begin() + v.size()/2, "TESTCODE");
     stats[0][2][0] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
@@ -81,31 +85,18 @@ int main() {
     s.erase(itS);
     stats[0][3][2] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();    
 
-    // --- Accumulation Logic ---
+    //  Accumulation Logic 
     for (int op = 0; op < 4; op++) {
-        for (int cont = 0; cont < 3; cont++) {
+            for (int cont = 0; cont < 3; cont++) {
                 stats[1][op][cont] += stats[0][op][cont];
             }
         }
     }
 
-    // Summing results from slice 0 into the accumulator slice 1
-        for (int op = 0; op < 4; op++) {
-            for (int cont = 0; cont < 3; cont++) {
-                if (stats[0][op][cont] != -1) {
-                    stats[1][op][cont] += stats[0][op][cont];
-                } else {
-                    stats[1][op][cont] = -1; 
-                }
-            }
-        }
-        cout << "Iteration " << run + 1 << " complete." << endl;
-    }
-
-    // Calculating averages and matching the sample table output
+    // Final Polished Output
     cout << "Number of simulations: " << NUM_RUNS << endl;
     cout << left << setw(12) << "Operation" << setw(12) << "Vector" << setw(12) << "List" << setw(12) << "Set" << endl;
-    
+
     string opNames[] = {"Read", "Sort", "Insert", "Delete"};
     for (int op = 0; op < 4; op++) {
         cout << left << setw(12) << opNames[op];
