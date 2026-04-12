@@ -79,8 +79,15 @@ int main() {
     auto itS = s.begin();
     advance(itS, s.size() / 2);
     s.erase(itS);
-    stats[0][3][2] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count(); 
-    cout << "\nMilestone 2 complete: 3D array populated and adapted to 15-run loop." << endl;
+    stats[0][3][2] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();    
+
+    // --- Accumulation Logic ---
+    for (int op = 0; op < 4; op++) {
+        for (int cont = 0; cont < 3; cont++) {
+                stats[1][op][cont] += stats[0][op][cont];
+            }
+        }
+    }
 
     // Summing results from slice 0 into the accumulator slice 1
         for (int op = 0; op < 4; op++) {
@@ -96,17 +103,15 @@ int main() {
     }
 
     // Calculating averages and matching the sample table output
-    cout << "\n" << left << setw(10) << "Operation" << setw(12) << "Vector" << setw(12) << "List" << setw(12) << "Set" << endl;
+    cout << "Number of simulations: " << NUM_RUNS << endl;
+    cout << left << setw(12) << "Operation" << setw(12) << "Vector" << setw(12) << "List" << setw(12) << "Set" << endl;
+    
     string opNames[] = {"Read", "Sort", "Insert", "Delete"};
     for (int op = 0; op < 4; op++) {
-        cout << left << setw(10) << opNames[op];
+        cout << left << setw(12) << opNames[op];
         for (int cont = 0; cont < 3; cont++) {
-            if (stats[1][op][cont] == -1) {
-                cout << setw(12) << "-1";
-            } else {
-                // Average = Total Sum / 15
-                cout << setw(12) << stats[1][op][cont] / NUM_RUNS;
-            }
+            // Calculate and display average
+            cout << setw(12) << stats[1][op][cont] / NUM_RUNS;
         }
         cout << endl;
     }
