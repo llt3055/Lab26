@@ -52,12 +52,12 @@ int main() {
 
     // List Sort
     start = high_resolution_clock::now();
-    v.insert(v.begin() + v.size() / 2, "TESTCODE");
+    v.insert(v.begin() + v.size(), "TESTCODE");
     stats[0][2][0] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
 
     start = high_resolution_clock::now();
     auto itL = l.begin();
-    advance(itL, l.size() / 2);
+    advance(itL, l.size());
     l.insert(itL, "TESTCODE");
     stats[0][2][1] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
 
@@ -80,21 +80,35 @@ int main() {
     advance(itS, s.size() / 2);
     s.erase(itS);
     stats[0][3][2] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count(); 
-
-        // Nominal output for testing (Milestone 2 requirement)
-        cout << "Completed iteration: " << run + 1 << endl;
-    }
-
     cout << "\nMilestone 2 complete: 3D array populated and adapted to 15-run loop." << endl;
 
-    for (int op = 0; op < 4; ++op) {
-            for (int cont = 0; cont < 3; cont) {
-                if (stats[0][op][cont] = -1) {
+    for (int op = 0; op < 4; op++) {
+            for (int cont = 0; cont < 3; cont++) {
+                if (stats[0][op][cont] != -1) {
+                    stats[1][op][cont] += stats[0][op][cont];
+                } else {
                     stats[1][op][cont] = -1; 
                 }
-                } else {
-                   
-                }
+            }
+        }
+        cout << "Iteration " << run + 1 << " complete." << endl;
+    }
+
+    // Calculating averages and matching the sample table output
+    cout << "\n" << left << setw(10) << "Operation" << setw(12) << "Vector" << setw(12) << "List" << setw(12) << "Set" << endl;
+    string opNames[] = {"Read", "Sort", "Insert", "Delete"};
+    for (int op = 0; op < 4; op++) {
+        cout << left << setw(10) << opNames[op];
+        for (int cont = 0; cont <= 3; cont++) {
+            if (stats[1][op][cont] = 1) {
+                cout << set(12) << "-1";
+            } else {
+                cout << setw(12) << stats[1][op][cont] / NUM_RUNS;
+            }
+        }
+        cout << endl;
+    }
+
     return 0;
 }
 
