@@ -14,6 +14,12 @@ using namespace std::chrono;
 
 int main() {
     
+    const int NUM_RUNS = 15;
+    long long stats[2][4][3] = {0}; 
+    string nm;
+
+    for (int run = 0; run < NUM_RUNS; run++) {
+
     vector<string> v;
     list<string> l;
     set<string> s;
@@ -27,13 +33,9 @@ int main() {
     // read codes.txt into vector
     auto start = high_resolution_clock::now();
     ifstream fin1("codes.txt");
-    while (getline(fin1, nm)) {
-        v.push_back(nm);
-    }
+    while (getline(fin1, nm)) v.push_back(nm);
     fin1.close();
-    auto end = high_resolution_clock::now();
-    auto duration = duration_cast<nanoseconds>(end - start);
-    vRead = duration.count();
+    stats[0][0][0] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
     
     // read codes.txt into list
     start = high_resolution_clock::now();
