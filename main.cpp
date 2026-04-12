@@ -47,60 +47,34 @@ int main() {
 
     // Vector Sort
     start = high_resolution_clock::now();
-    sort(v.begin(), v.end());
-    end = high_resolution_clock::now();
-    duration = duration_cast<nanoseconds>(end - start);
-    vSort = duration.count();
+    l.sort();
+    stats[0][1][1] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
+    stats[0][1][2] = -1; // Set is inherently sorted
 
     // List Sort
     start = high_resolution_clock::now();
-    l.sort();
-    end = high_resolution_clock::now();
-    duration = duration_cast<nanoseconds>(end - start);
-    lSort = duration.count();
-
-    // Set (Already sorted by design)
-    sSort = -1;
-
-    // Vector Insert
-    start = high_resolution_clock::now();
     v.insert(v.begin() + v.size() / 2, "TESTCODE");
-    end = high_resolution_clock::now();
-    duration = duration_cast<nanoseconds>(end - start);
-    vIns = duration.count();
-    
+    stats[0][2][0] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
 
-    // List Insert
     start = high_resolution_clock::now();
     auto itL = l.begin();
     advance(itL, l.size() / 2);
     l.insert(itL, "TESTCODE");
-    end = high_resolution_clock::now();
-    duration = duration_cast<nanoseconds>(end - start);
-    lIns = duration.count();
+    stats[0][2][1] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
 
-    // Set Insert
     start = high_resolution_clock::now();
     s.insert("TESTCODE");
-    end = high_resolution_clock::now();
-    duration = duration_cast<nanoseconds>(end - start);
-    sIns = duration.count();
+    stats[0][2][2] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
 
-    // Vector Delete
     start = high_resolution_clock::now();
     v.erase(v.begin() + v.size() / 2);
-    end = high_resolution_clock::now();
-    duration = duration_cast<nanoseconds>(end - start);
-    vDel = duration.count();
+    stats[0][3][0] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count(); 
 
-    // List Delete
     start = high_resolution_clock::now();
     itL = l.begin();
     advance(itL, l.size() / 2);
     l.erase(itL);
-    end = high_resolution_clock::now();
-    duration = duration_cast<nanoseconds>(end - start);
-    lDel = duration.count();
+    stats[0][3][1] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count(); 
 
     // Set Delete
     start = high_resolution_clock::now();
