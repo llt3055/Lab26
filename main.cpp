@@ -44,8 +44,7 @@ int main() {
     while (getline(fin3, nm)) s.insert(nm);
     fin3.close();
     stats[0][0][2] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
-
-    // Vector Sort
+    
     start = high_resolution_clock::now();
     l.sort();
     stats[0][1][1] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
@@ -76,21 +75,17 @@ int main() {
     l.erase(itL);
     stats[0][3][1] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count(); 
 
-    // Set Delete
     start = high_resolution_clock::now();
     auto itS = s.begin();
     advance(itS, s.size() / 2);
     s.erase(itS);
-    end = high_resolution_clock::now();
-    duration = duration_cast<nanoseconds>(end - start);
-    sDel = duration.count();
+    stats[0][3][2] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count(); 
 
-    // FINAL OUTPUT 
-    cout << left << setw(10) << "Operation" << setw(12) << "Vector" << setw(12) << "List" << setw(12) << "Set" << endl;
-    cout << left << setw(10) << "Read"   << setw(12) << vRead << setw(12) << lRead << setw(12) << sRead << endl;
-    cout << left << setw(10) << "Sort"   << setw(12) << vSort << setw(12) << lSort << setw(12) << sSort << endl;
-    cout << left << setw(10) << "Insert" << setw(12) << vIns  << setw(12) << lIns  << setw(12) << sIns  << endl;
-    cout << left << setw(10) << "Delete" << setw(12) << vDel  << setw(12) << lDel  << setw(12) << sDel << endl;
+        // Nominal output for testing (Milestone 2 requirement)
+        cout << "Completed iteration: " << run + 1 << endl;
+    }
+
+    cout << "\nMilestone 2 complete: 3D array populated and adapted to 15-run loop." << endl;
 
     return 0;
 }
