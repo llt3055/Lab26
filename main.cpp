@@ -82,7 +82,8 @@ int main() {
     stats[0][3][2] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count(); 
     cout << "\nMilestone 2 complete: 3D array populated and adapted to 15-run loop." << endl;
 
-    for (int op = 0; op < 4; op++) {
+    // Summing results from slice 0 into the accumulator slice 1
+        for (int op = 0; op < 4; op++) {
             for (int cont = 0; cont < 3; cont++) {
                 if (stats[0][op][cont] != -1) {
                     stats[1][op][cont] += stats[0][op][cont];
@@ -99,10 +100,11 @@ int main() {
     string opNames[] = {"Read", "Sort", "Insert", "Delete"};
     for (int op = 0; op < 4; op++) {
         cout << left << setw(10) << opNames[op];
-        for (int cont = 0; cont <= 3; cont++) {
-            if (stats[1][op][cont] = 1) {
-                cout << set(12) << "-1";
+        for (int cont = 0; cont < 3; cont++) {
+            if (stats[1][op][cont] == -1) {
+                cout << setw(12) << "-1";
             } else {
+                // Average = Total Sum / 15
                 cout << setw(12) << stats[1][op][cont] / NUM_RUNS;
             }
         }
