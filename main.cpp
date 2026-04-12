@@ -23,12 +23,6 @@ int main() {
     vector<string> v;
     list<string> l;
     set<string> s;
-    string nm;
-
-    long  vRead, lRead, sRead;
-    long  vSort, lSort, sSort;
-    long  vIns, lIns, sIns;
-    long  vDel, lDel, sDel;
 
     // read codes.txt into vector
     auto start = high_resolution_clock::now();
@@ -40,24 +34,16 @@ int main() {
     // read codes.txt into list
     start = high_resolution_clock::now();
     ifstream fin2("codes.txt");
-    while (getline(fin2, nm)) {
-        l.push_back(nm);
-    }
+    while (getline(fin2, nm)) l.push_back(nm);
     fin2.close();
-    end = high_resolution_clock::now();
-    duration = duration_cast<nanoseconds>(end - start);
-    lRead = duration.count();
+    stats[0][0][1] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
 
     // Set Read
     start = high_resolution_clock::now();
     ifstream fin3("codes.txt");
-    while (getline(fin3, nm)) {
-        s.insert(nm); 
-    }
+    while (getline(fin3, nm)) s.insert(nm);
     fin3.close();
-    end = high_resolution_clock::now();
-    duration = duration_cast<nanoseconds>(end - start);
-    sRead = duration.count();
+    stats[0][0][2] = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
 
     // Vector Sort
     start = high_resolution_clock::now();
